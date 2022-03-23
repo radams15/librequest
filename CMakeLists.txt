@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(Request C CXX OBJC)
+project(Request C)
 
 option(BUILD_TEST "Builds a test app" ON)
 
@@ -18,9 +18,11 @@ endif()
 
 add_library(request SHARED ${LIBS})
 
-target_include_directories(request PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+add_subdirectory(lib/b64)
 
-target_link_libraries(request PRIVATE ${FOUNDATION})
+target_include_directories(request PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} lib/b64/)
+
+target_link_libraries(request PRIVATE b64c ${FOUNDATION})
 
 if(BUILD_TEST)
     add_executable(reqtest test.c)

@@ -7,7 +7,7 @@ int main(int argc, char** argv){
 	Res_t* data;
 
 	if(argc <= 1){
-		data = req_get("https://oauth.reddit.com/hot", 0, NULL, NULL);
+		data = req_get("https://google.com", 0, NULL, NULL);
 	}else{
 		data = req_get(argv[1], 0, NULL, NULL);
 	}

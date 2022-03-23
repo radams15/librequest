@@ -8,13 +8,18 @@
 
 #include <Foundation/Foundation.h>
 
+#include <b64.h>
+
 #include <request.h>
 
 Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* headers){
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
     NSMutableURLRequest* mutreq = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithUTF8String:url]]];
 
     if(headers != NULL) {
-        for (unsigned int i = 0; i < headers->length; i++) {
+        unsigned int i;
+        for (i=0; i < headers->length; i++) {
             [mutreq addValue:[NSString stringWithUTF8String:headers->values[i]] forHTTPHeaderField:[NSString stringWithUTF8String:headers->keys[i]]];
         }
     }
@@ -40,6 +45,8 @@ Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* hea
 		out_var->data = malloc(out_var->length);
 		
 		memcpy((char*) out_var->data, bytes, out_var->length);
+
+        [pool release];
 		
 		return out_var;
 	}
@@ -47,15 +54,19 @@ Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* hea
 	out_var->err = 1;
 	
 	NSLog(@"%@", [err localizedDescription]);
+
+    [pool release];
 	
 	return out_var;
 }
 
 Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const char* data, Headers_t* headers, const char* username, const char* password){
-    NSMutableURLRequest* mutreq = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithUTF8String:url]]];
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
+    NSMutableURLRequest* mutreq = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithUTF8String:url]]];
     if(headers != NULL) {
-        for (unsigned int i = 0; i < headers->length; i++) {
+        unsigned int i;
+        for (i=0; i < headers->length; i++) {
             [mutreq addValue:[NSString stringWithUTF8String:headers->values[i]] forHTTPHeaderField:[NSString stringWithUTF8String:headers->keys[i]]];
         }
     }
@@ -63,8 +74,9 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
     [mutreq setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", [NSString stringWithUTF8String:username], [NSString stringWithUTF8String:password]];
-    NSData *authData = [authStr dataUsingEncoding:NSASCIIStringEncoding];
-    NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64Encoding]];
+    NSData* authData = [authStr dataUsingEncoding:NSASCIIStringEncoding];
+    const char* as = b64_encode([authStr UTF8String], [authStr length]);
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", [NSString stringWithUTF8String: as]];
     [mutreq addValue:authValue forHTTPHeaderField:@"Authorization"];
 
 
@@ -80,6 +92,8 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
 
     NSData* resdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&err];
 
+    free(as);
+
     Res_t* out_var = malloc(sizeof(struct Res));
     out_var->length = 0;
 
@@ -94,12 +108,16 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
 
         memcpy((char*) out_var->data, bytes, out_var->length);
 
+        [pool release];
+
         return out_var;
     }
 
     out_var->err = 1;
 
     NSLog(@"%@", [err localizedDescription]);
+
+    [pool release];
 
     return out_var;
 }
