@@ -1,0 +1,8 @@
+/win32/librequest/release/
+/win32/librequest/librequest/Release/
+*.o
+*.dylib
+*.so
+*.obj
+test_darwin
+/cmake-build-debug/
