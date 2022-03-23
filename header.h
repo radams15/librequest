@@ -13,4 +13,6 @@ typedef struct Headers {
 
 Headers_t* headers_append(Headers_t *headers, const char *key, const char* value);
 
+void headers_free(Headers_t* headers);
+
 #endif //REQUEST_HEADER_H
