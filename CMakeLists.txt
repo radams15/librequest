@@ -33,9 +33,9 @@ endif()
 
 add_library(request SHARED ${LIBS})
 
-add_subdirectory(lib/b64)
+add_subdirectory(lib/b64.c)
 
-target_include_directories(request PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CURL_INCLUDE_DIRS} lib/b64/)
+target_include_directories(request PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CURL_INCLUDE_DIRS} ${B64_INCLUDES})
 
 target_link_libraries(request PRIVATE b64c ${FOUNDATION} ${CURL_LIBRARIES})
 
