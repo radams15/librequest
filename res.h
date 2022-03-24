@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 typedef struct Res{
-	const void* data;
+	char* data;
 	int err;
 	size_t length;
 } Res_t;
