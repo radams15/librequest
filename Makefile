@@ -26,7 +26,7 @@ endif
 all: test_darwin
 
 header:
-	gcc -E request.h -I.  | sed 's/^#.*//g' > libreq.h
+	gcc -E include/request.h -Iinclude/  | sed 's/^#.*//g' > libreq.h
 
 win32/request.obj:
 	${CC} -fPIC -c win32/request.cpp -o win32/request.obj -I.
@@ -34,7 +34,7 @@ win32/request.obj:
 res.obj:
 	${CC} -fPIC -c res.c -o res.obj -I.
 
-librequest.dll: win32/request.obj res.obj
+librequest.dll: src/main/backends/win32 res.obj
 	${CC} -shared win32/request.obj res.obj -o librequest.dll -lwininet
 
 
@@ -49,7 +49,7 @@ darwin/request.o:
 res.o:
 	${CC} -fPIC ${ARCH} ${TARGET} -c res.c -o res.o -I.
 
-librequest.dylib: darwin/request.o res.o
+librequest.dylib: src/main/backends/darwin res.o
 	${CC} -framework Foundation ${ARCH} ${TARGET} -dynamiclib darwin/request.o res.o -o librequest.dylib
 
 test_darwin: librequest.dylib

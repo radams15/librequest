@@ -1,5 +1,5 @@
-/win32/librequest/release/
-/win32/librequest/librequest/Release/
+/src/main/backends/win32/librequest/release/
+/src/main/backends/win32/librequest/librequest/Release/
 *.o
 *.dylib
 *.so
