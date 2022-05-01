@@ -8,7 +8,7 @@
 
 #include <Foundation/Foundation.h>
 
-#include <b64.h>
+#include "../../../../lib/b64.c/b64.h"
 
 #include <request.h>
 

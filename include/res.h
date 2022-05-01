@@ -9,7 +9,16 @@
 
 #include <stddef.h>
 
-#define EXPORT comment(linker, "/EXPORT:" __FUNCTION__ "=" __FUNCDNAME__)
+#if defined(_WIN32)
+#    ifdef LIBRARY_EXPORTS
+#        define LIBRARY_API __declspec(dllexport)
+#    else
+#        define LIBRARY_API __declspec(dllimport)
+#    endif
+#else
+#    define LIBRARY_API
+#endif
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,7 +30,7 @@ typedef struct Res{
 	size_t length;
 } Res_t;
 
-void res_free(Res_t* res);
+LIBRARY_API void res_free(Res_t* res);
 
 #ifdef __cplusplus
 }
