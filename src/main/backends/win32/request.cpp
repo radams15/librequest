@@ -105,7 +105,7 @@ const char* inet_post(const char* _server, const char* _page, const char* data, 
     return (const char*) szData;
 }
 
-Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const char* data, Headers_t* headers, const char* username, const char* password){
+LIBRARY_API Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const char* data, Headers_t* headers, const char* username, const char* password){
     int https = 0;
 
     Res_t* out = (Res_t*) malloc(sizeof(Res_t));
@@ -168,7 +168,7 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
     return out;
 }
 
-Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* headers){
+LIBRARY_API Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* headers){
 	int https = 0;
 
 	Res_t* out = (Res_t*) malloc(sizeof(Res_t));
