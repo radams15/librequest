@@ -13,7 +13,7 @@
 #include <request.h>
 
 Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* headers){
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    //NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     NSMutableURLRequest* mutreq = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithUTF8String:url]]];
 
@@ -46,7 +46,7 @@ Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* hea
 		
 		memcpy((char*) out_var->data, bytes, out_var->length);
 
-        [pool release];
+        //[pool release];
 		
 		return out_var;
 	}
@@ -55,13 +55,13 @@ Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* hea
 	
 	NSLog(@"%@", [err localizedDescription]);
 
-    [pool release];
+    //[pool release];
 	
 	return out_var;
 }
 
 Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const char* data, Headers_t* headers, const char* username, const char* password){
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    //NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     NSMutableURLRequest* mutreq = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithUTF8String:url]]];
     if(headers != NULL) {
@@ -108,7 +108,7 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
 
         memcpy((char*) out_var->data, bytes, out_var->length);
 
-        [pool release];
+        //[pool release];
 
         return out_var;
     }
@@ -117,7 +117,7 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
 
     NSLog(@"%@", [err localizedDescription]);
 
-    [pool release];
+    //[pool release];
 
     return out_var;
 }

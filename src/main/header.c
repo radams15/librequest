@@ -21,14 +21,18 @@ Headers_t* headers_append(Headers_t *headers, const char *key, const char* value
 
     headers->length++;
 
+<<<<<<< HEAD
     char** tmpkeys = headers->keys;
     char** tmpvals = headers->values;
 
-    headers->keys = realloc(headers->keys, (headers->length+1)*sizeof(char));
-    headers->values = realloc(headers->values, (headers->length+1)*sizeof(char));
+    headers->keys = realloc(headers->keys, (headers->length+1)*sizeof(char*));
+    headers->values = realloc(headers->values, (headers->length+1)*sizeof(char*));
 
-    headers->keys[headers->length-1] = calloc(strlen(key)+1, sizeof(char));strcpy(headers->keys[headers->length-1], key);
-    headers->values[headers->length-1] = calloc(strlen(value)+1, sizeof(char));strcpy(headers->values[headers->length-1], value);
+    headers->keys[headers->length-1] = calloc(strlen(key)+1, sizeof(char));
+    strcpy(headers->keys[headers->length-1], key);
+
+    headers->values[headers->length-1] = calloc(strlen(value)+1, sizeof(char));
+    strcpy(headers->values[headers->length-1], value);
 
     return headers;
 }
