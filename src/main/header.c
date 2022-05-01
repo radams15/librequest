@@ -9,7 +9,7 @@
 #include <header.h>
 #include <string.h>
 
-Headers_t* headers_append(Headers_t *headers, const char *key, const char* value) {
+LIBRARY_API Headers_t* headers_append(Headers_t *headers, const char *key, const char* value) {
     if(headers == NULL){
         headers = malloc(sizeof(Headers_t));
 
@@ -20,10 +20,6 @@ Headers_t* headers_append(Headers_t *headers, const char *key, const char* value
     }
 
     headers->length++;
-
-<<<<<<< HEAD
-    char** tmpkeys = headers->keys;
-    char** tmpvals = headers->values;
 
     headers->keys = realloc(headers->keys, (headers->length+1)*sizeof(char*));
     headers->values = realloc(headers->values, (headers->length+1)*sizeof(char*));
@@ -37,6 +33,6 @@ Headers_t* headers_append(Headers_t *headers, const char *key, const char* value
     return headers;
 }
 
-void headers_free(Headers_t *headers) {
+LIBRARY_API void headers_free(Headers_t *headers) {
     printf("Free headers: TODO\n");
 }
