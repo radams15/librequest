@@ -34,5 +34,9 @@ LIBRARY_API Headers_t* headers_append(Headers_t *headers, const char *key, const
 }
 
 LIBRARY_API void headers_free(Headers_t *headers) {
-    printf("Free headers: TODO\n");
+    for(int i=0 ; i<headers->length ; i++){
+        free(headers->keys[i]);
+        free(headers->values[i]);
+    }
+    free(headers);
 }
