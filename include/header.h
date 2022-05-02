@@ -5,7 +5,7 @@
 #ifndef REQUEST_HEADER_H
 #define REQUEST_HEADER_H
 
-#if defined(_WIN32)
+#if defined(_WIN32)  && !NO_EXPORT
 #    ifdef LIBRARY_EXPORTS
 #        define LIBRARY_API __declspec(dllexport)
 #    else

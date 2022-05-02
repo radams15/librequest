@@ -34,6 +34,9 @@ endif()
 
 add_library(request SHARED ${LIBS})
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+target_compile_definitions(request PUBLIC NO_EXPORT)
+
 message("Libs: ${LIBS}")
 
 add_subdirectory(lib/b64.c)

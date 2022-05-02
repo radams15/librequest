@@ -10,7 +10,7 @@
 #include "res.h"
 #include "header.h"
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !NO_EXPORT
 #    ifdef LIBRARY_EXPORTS
 #        define LIBRARY_API __declspec(dllexport)
 #    else
