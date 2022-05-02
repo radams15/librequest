@@ -55,7 +55,7 @@ Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* hea
         if(headers != NULL){
             struct curl_slist* curl_headers = NULL;
             for(int i=0 ; i<headers->length ; i++){
-                char* together = calloc(strlen(headers->keys[i])+strlen(headers->values[i])+2, sizeof(char));
+                char* together = calloc(strlen(headers->keys[i])+strlen(headers->values[i])+5, sizeof(char));
                 sprintf(together, "%s: %s", headers->keys[i], headers->values[i]);
 
                 curl_headers = curl_slist_append(curl_headers, together);
@@ -68,6 +68,7 @@ Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* hea
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, out);
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
+        curl_easy_setopt(curl, CURLOPT_CAINFO, "curl-ca-bundle.crt");
         res = curl_easy_perform(curl);
 
         /* always cleanup */
@@ -105,7 +106,7 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
         if(headers != NULL){
             struct curl_slist* curl_headers = NULL;
             for(int i=0 ; i<headers->length ; i++){
-                char* together = calloc(strlen(headers->keys[i])+strlen(headers->values[i])+2, sizeof(char));
+                char* together = calloc(strlen(headers->keys[i])+strlen(headers->values[i])+5, sizeof(char));
                 sprintf(together, "%s: %s", headers->keys[i], headers->values[i]);
 
                 curl_headers = curl_slist_append(curl_headers, together);
@@ -117,6 +118,8 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
         char* userpwd = calloc(strlen(username)+strlen(password)+5, sizeof(char));
         sprintf(userpwd, "%s:%s", username, password);
 
+        //printf("\tUserpwd: %s\n", userpwd);
+
         curl_easy_setopt(curl, CURLOPT_URL, real_url);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
         curl_easy_setopt(curl, CURLOPT_POST, 1);
@@ -125,6 +128,8 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, out);
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
+        curl_easy_setopt(curl, CURLOPT_CAINFO, "curl-ca-bundle.crt");
+
 
         //curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
         res = curl_easy_perform(curl);
@@ -133,6 +138,8 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
         curl_easy_cleanup(curl);
 
         free(real_url);
+
+        //printf("Data (%s)/(%zu): %s\n", curl_easy_strerror(res), out->length, out->data);
 
         return out;
     }
