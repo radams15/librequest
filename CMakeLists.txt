@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(Request C CXX)
 
-option(BUILD_TEST "Builds a test app" ON)
 option(USE_LIBCURL "Uses libcurl library (must use for linux)" OFF)
 
 if(UNIX AND NOT APPLE)
@@ -41,9 +40,3 @@ add_subdirectory(lib/b64.c)
 target_include_directories(request PRIVATE include/ src/main/ ${CURL_INCLUDE_DIRS} ${B64_INCLUDES})
 
 target_link_libraries(request PRIVATE b64c ${FOUNDATION} ${CURL_LIBRARIES} ${WIN32_LIBS})
-
-if(BUILD_TEST)
-    add_executable(reqtest src/main/test.c)
-    target_include_directories(reqtest PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR})
-    target_link_libraries(reqtest request)
-endif()
