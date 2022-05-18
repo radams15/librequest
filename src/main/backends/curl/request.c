@@ -68,7 +68,10 @@ Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* hea
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, out);
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
+
+#ifdef LOCAL_CERT
         curl_easy_setopt(curl, CURLOPT_CAINFO, "curl-ca-bundle.crt");
+#endif
         res = curl_easy_perform(curl);
 
         /* always cleanup */
@@ -128,8 +131,10 @@ Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const ch
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, out);
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
-        curl_easy_setopt(curl, CURLOPT_CAINFO, "curl-ca-bundle.crt");
 
+#ifdef LOCAL_CERT
+        curl_easy_setopt(curl, CURLOPT_CAINFO, "curl-ca-bundle.crt");
+#endif
 
         //curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
         res = curl_easy_perform(curl);
