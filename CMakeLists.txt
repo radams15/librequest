@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(Request C CXX)
 
 option(USE_LIBCURL "Uses libcurl library (must use for linux)" OFF)
+option(USE_LOCAL_CERT "Uses local certificate bundle called 'curl-ca-bundle.crt' (only for libcurl)" OFF)
 
 if(UNIX AND NOT APPLE)
     set(USE_LIBCURL ON)
@@ -31,7 +32,12 @@ else()
     endif()
 endif()
 
-add_library(request SHARED ${LIBS})
+add_library(request STATIC ${LIBS})
+
+if(USE_LIBCURL AND USE_LOCAL_CERT)
+    message("Using local certificate bundle")
+    target_compile_definitions(request PRIVATE LOCAL_CERT)
+endif()
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 target_compile_definitions(request PUBLIC NO_EXPORT)
