@@ -12,7 +12,7 @@
 
 #include <request.h>
 
-Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* headers){
+const char* req_get(const char* url, Headers_t* headers){
     //NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     NSMutableURLRequest* mutreq = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithUTF8String:url]]];
@@ -60,7 +60,7 @@ Res_t* req_get(const char* url, int use_proxy, const char* proxy, Headers_t* hea
 	return out_var;
 }
 
-Res_t* req_post_auth(const char* url, int use_proxy, const char* proxy, const char* data, Headers_t* headers, const char* username, const char* password){
+Res_t* req_post_auth(const char* url, const char* data, Headers_t* headers, const char* username, const char* password){
     //NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     NSMutableURLRequest* mutreq = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithUTF8String:url]]];

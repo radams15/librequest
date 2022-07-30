@@ -22,7 +22,7 @@ static size_t writefunc(void *ptr, size_t size, size_t nmemb, Res_t* s) {
     size_t new_len = s->length + size*nmemb;
     s->data = realloc(s->data, new_len+1);
     if (s->data == NULL) {
-        fprintf(stderr, "realloc() failed\n");
+        printf("realloc() failed!\n");
         exit(EXIT_FAILURE);
     }
     memcpy(s->data+s->length, ptr, size*nmemb);

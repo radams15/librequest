@@ -7,7 +7,8 @@
  *
  */
 
-#include <stddef.h>
+//#include <stddef.h>
+#define size_t long
 
 #if defined(_WIN32)  && !NO_EXPORT
 #    ifdef LIBRARY_EXPORTS
