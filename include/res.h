@@ -7,8 +7,11 @@
  *
  */
 
-//#include <stddef.h>
+#ifdef __APPLE__
 #define size_t long
+#else
+#include <stddef.h>
+#endif
 
 #if defined(_WIN32)  && !NO_EXPORT
 #    ifdef LIBRARY_EXPORTS
