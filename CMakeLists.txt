@@ -5,7 +5,7 @@ option(BACKEND "Backend for web requests curl/" curl)
 option(USE_LOCAL_CERT "Uses local certificate bundle called 'curl-ca-bundle.crt' (only for libcurl)" OFF)
 
 
-set(LIBS src/main/res.c src/main/header.c src/main/request_generic.c)
+set(LIBS src/main/res.c src/main/header.c src/main/request_generic.c lib/b64.c/buffer.c lib/b64.c/decode.c lib/b64.c/encode.c)
 
 set(LIBREQ_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include PARENT_SCOPE)
 
@@ -51,7 +51,7 @@ else()
     endif()
 endif()
 
-add_library(request STATIC ${LIBS})
+add_library(request SHARED ${LIBS})
 
 if(USE_LIBCURL AND USE_LOCAL_CERT)
     message("Using local certificate bundle")
@@ -67,7 +67,7 @@ add_subdirectory(lib/b64.c)
 
 target_include_directories(request PRIVATE include/ src/main/ ${CURL_INCLUDE_DIRS} ${B64_INCLUDES})
 
-target_link_libraries(request PRIVATE b64c ${FOUNDATION} ${CURL_LIBRARIES} ${WIN32_LIBS} ${QT5_LIBS})
+target_link_libraries(request PRIVATE ${FOUNDATION} ${CURL_LIBRARIES} ${WIN32_LIBS} ${QT5_LIBS})
 
 if("${BACKEND}" STREQUAL "qt")
 qt5_use_modules(request Core Network)

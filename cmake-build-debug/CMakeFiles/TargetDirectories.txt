@@ -1,7 +1,0 @@
-/mnt/share/scripts/libreq/cmake-build-debug/CMakeFiles/request.dir
-/mnt/share/scripts/libreq/cmake-build-debug/CMakeFiles/reqtest.dir
-/mnt/share/scripts/libreq/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/share/scripts/libreq/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/mnt/share/scripts/libreq/cmake-build-debug/lib/b64.c/CMakeFiles/b64c.dir
-/mnt/share/scripts/libreq/cmake-build-debug/lib/b64.c/CMakeFiles/edit_cache.dir
-/mnt/share/scripts/libreq/cmake-build-debug/lib/b64.c/CMakeFiles/rebuild_cache.dir
